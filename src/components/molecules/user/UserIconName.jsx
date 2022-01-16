@@ -1,11 +1,18 @@
+import React from "react";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../store/userState";
 
 export const UserIconName = (props) => {
   const { image, name } = props;
+  // const {userInfo} = useContext(UserContext);
+  const userInfo = useRecoilValue(userState);
+  const isAdmin = userInfo ? userInfo.isAdmin : false;
   return (
     <SContainer>
       <SImg height={160} width={160} src={image} alt={name} />
       <SName>{name}</SName>
+      {isAdmin && <SEdit>編集</SEdit>}
     </SContainer>
   );
 };
@@ -21,4 +28,9 @@ const SName = styled.p`
   font-weight: bold;
   margin: 0;
   color: #40454e;
+`;
+const SEdit = styled.span`
+  text-decoration: underline;
+  color: #aaa;
+  cursor: pointer;
 `;
